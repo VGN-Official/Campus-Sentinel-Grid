@@ -35,7 +35,9 @@
         body { 
             margin: 0; 
             font-family: 'Segoe UI', system-ui, sans-serif; 
-            background: #0f272a; 
+            /* Rich radial gradient that radiates deep blue from the center out to pitch dark */
+            background: radial-gradient(circle at top, #0a192f 0%, #020c1b 100%); 
+            background-attachment: fixed;
             color: #f1f5f9;
         }
 
@@ -64,14 +66,14 @@
             .right-column { flex: 1; }
         }
 
-        /* Left Column: Candidate Info Profile */
+       /* Brighten up your card containers slightly to sit perfectly on top of the new gradient */
         .candidate-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 25px;
-            border-top: 5px solid var(--apc-green);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        }
+        background: #0d1e36;
+        border-radius: 16px;
+        padding: 25px;
+        border-top: 5px solid var(--apc-green);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
         .avatar-frame {
             width: 130px;
             height: 130px;
@@ -87,16 +89,15 @@
         .avatar-frame img { width: 100%; height: 100%; object-fit: cover; }
         .bio-tag { background: #334155; padding: 6px 12px; border-radius: 20px; font-size: 0.78rem; margin: 4px; display: inline-block; color: #cbd5e1; }
 
-        /* Right Column: Complete SOS Engine and Inputs */
-        .sos-panel {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid #334155;
-            border-radius: 16px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
+       .sos-panel {
+        background: rgba(13, 30, 54, 0.75);
+        border: 1px solid #1e3a61;
+        border-radius: 16px;
+        padding: 25px;
+        text-align: center;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        backdrop-filter: blur(8px); /* Subtle glassmorphism effect */
+    }
         .sos-circle-trigger {
             width: 210px;           
             height: 210px;          
