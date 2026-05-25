@@ -3,170 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VigilanNG | Campaign Security Initiative</title>
+    <title>APC Campus Sentinel | Renewed Hope Security</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0b5394">
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="manifest.json">
+    
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker Registered!'))
+                    .catch(err => console.log('SW Registration Failed:', err));
+            });
+        }
+    </script>
+
     <style>
         :root {
-            --primary-dark: #0f172a;   /* Deep Executive Navy */
-            --accent-red: #dc2626;     /* SOS Emergency Red */
-            --campaign-gold: #eab308;  /* Leadership Gold */
+            --apc-blue: #0b5394;
+            --apc-green: #38761d;
+            --sos-red: #dc2626;
             --card-bg: #1e293b;
         }
         
         body { 
             margin: 0; 
             font-family: 'Segoe UI', system-ui, sans-serif; 
-            background: var(--primary-dark); 
+            background: #0f172a; 
             color: #f1f5f9;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
 
-        /* Header Navigation */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 15px 0;
             border-bottom: 1px solid #334155;
         }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--accent-red); letter-spacing: 1px; }
+        .logo { font-size: 1.4rem; font-weight: bold; color: var(--sos-red); letter-spacing: 1px; }
 
-        /* Main Hero Section Split */
-        .hero {
+        /* Split-Screen Layout Structure */
+        .grid-layout {
             display: flex;
             flex-direction: column;
-            md-flex-direction: row;
-            gap: 40px;
-            margin-top: 40px;
-            align-items: center;
+            gap: 30px;
+            margin-top: 30px;
         }
 
         @media (min-width: 768px) {
-            .hero { flex-direction: row; }
-            .hero-text { flex: 1; }
-            .hero-visual { flex: 1; text-align: center; }
+            .grid-layout { flex-direction: row; align-items: flex-start; }
+            .left-column { flex: 1.1; position: sticky; top: 20px; }
+            .right-column { flex: 1; }
         }
 
-        /* Profile & Insignia Column */
+        /* Left Column: Candidate Info Profile */
         .candidate-card {
             background: var(--card-bg);
             border-radius: 16px;
-            padding: 30px;
-            border-top: 5px solid var(--campaign-gold);
+            padding: 25px;
+            border-top: 5px solid var(--apc-green);
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
-
-        .avatar-placeholder {
-            width: 180px;
-            height: 180px;
+        .avatar-frame {
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             background: #475569;
-            margin: 0 auto 20px;
-            border: 4px solid var(--campaign-gold);
+            margin: 0 auto 15px;
+            border: 4px solid var(--apc-blue);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
         }
-        
-        .avatar-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .bio-tag { background: #334155; padding: 6px 12px; border-radius: 20px; font-size: 0.78rem; margin: 4px; display: inline-block; color: #cbd5e1; }
 
-        .credentials h2 { margin: 5px 0; color: #fff; font-size: 1.8rem; }
-        .credentials .title { color: var(--campaign-gold); font-weight: 600; font-size: 1rem; margin-bottom: 15px; text-transform: uppercase; }
-        .bio-tag { background: #334155; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; margin: 3px; display: inline-block; }
-
-        /* Action Launch Panel */
-        .action-panel {
-            background: rgba(220, 38, 38, 0.1);
-            border: 1px solid rgba(220, 38, 38, 0.2);
+        /* Right Column: Complete SOS Engine and Inputs */
+        .sos-panel {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid #334155;
             border-radius: 16px;
-            padding: 30px;
+            padding: 25px;
             text-align: center;
-            margin-top: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            max-width: 320px;
-            padding: 16px;
-            margin: 10px auto;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: bold;
+        .sos-circle-trigger {
+            width: 210px;           
+            height: 210px;          
+            border-radius: 50%;     
+            overflow: hidden;       
+            background: transparent;
             cursor: pointer;
-            text-decoration: none;
-            transition: all 0.2s ease;
+            margin: 20px auto;
+            filter: drop-shadow(0px 8px 20px rgba(220, 38, 38, 0.4)); 
+            transition: transform 0.1s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .sos-circle-trigger:active { transform: scale(0.95); }
+
+        /* Consistent Form Inputs styling */
+        .input-group-title {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            margin: 20px 0 10px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-left: 3px solid var(--apc-blue);
+            padding-left: 8px;
         }
 
-        .btn-sos { background: var(--accent-red); color: white; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4); }
-        .btn-sos:hover { background: #b91c1c; transform: translateY(-2px); }
-        
-        .btn-command { background: #475569; color: white; }
-        .btn-command:hover { background: #334155; }
+        .input-field {
+            display: block; margin: 8px auto; padding: 12px; width: 100%; 
+            border-radius: 8px; border: 1px solid #475569; background: #0f172a; 
+            color: white; font-size: 0.9rem; box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        .input-field:focus { border-color: var(--apc-blue); outline: none; }
+
+        .sub-text { font-size: 0.72rem; color: #64748b; margin-top: 5px; text-align: left; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <header>
-        <div class="logo"><i class="fa-solid fa-shield-halved"></i> Campus Sentinel Grid</div>
-        <div style="font-size: 0.9rem; color: #94a3b8;"><i class="fa-solid fa-circle" style="color: #22c55e;"></i> SECURE PROTOCOL ACTIVE</div>
+   <header>
+        <div class="logo">
+            <i class="fa-solid fa-shield-halved"></i> CAMPUS SENTINEL
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="text-align: right; line-height: 1.2; display: none; @media(min-width: 480px) { display: block; }">
+                <span style="font-size: 0.85rem; font-weight: bold; color: #fff; display: block;">ALL PROGRESSIVES CONGRESS</span>
+                <br>
+                <span style="font-size: 0.7rem; color: #22c55e;"><i class="fa-solid fa-circle" style="font-size: 0.55rem;"></i> SECURE GRID ACTIVE</span>
+            </div>
+            <div style="width: 40px; height: 40px; border-radius: 6px; background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid var(--apc-blue); padding: 2px; box-sizing: border-box;">
+                <img src="apc_logo.png" alt="APC Logo" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+        </div>
     </header>
 
-    <div class="hero">
-        <div class="hero-text">
+    <div class="grid-layout">
+        <div class="left-column">
             <div class="candidate-card">
-                <div class="avatar-placeholder">
-                    <i class="fa-solid fa-user-tie" style="font-size: 5rem; color: #cbd5e1;"></i>
+                <div class="avatar-frame">
+                    <i class="fa-solid fa-user-tie" style="font-size: 4rem; color: #cbd5e1;"></i>
                 </div>
-                <div class="credentials" style="text-align: center;">
-                    <h2>HON. ALIYU BELLO</h2>
-                    <div class="title">For Executive Chairman / Stakeholder</div>
+                <div style="text-align: center;">
+                    <h2 style="margin: 5px 0; font-size: 1.6rem; color: #fff;">HON. ALIYU BELLO</h2>
+                    <div style="color: var(--apc-green); font-weight: bold; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">For Executive Chairman / Stakeholder</div>
                     <hr style="border-color: #334155; margin: 15px 0;">
                     
-                    <p style="text-align: left; font-size: 0.95rem; line-height: 1.5; color: #cbd5e1;">
-                        Delivering a proactive, digitally protected constituency. This infrastructure directly connects local communities, campuses, and response squads to clear tactical assets during vulnerabilities.
+                    <p style="text-align: left; font-size: 0.9rem; line-height: 1.6; color: #cbd5e1;">
+                        "True progress is impossible without absolute security. As part of our commitment to safeguarding our future leaders, we deploy the Campus Sentinel Grid—a rapid-response SOS safety layer for our institutions."
                     </p>
                     
                     <div style="text-align: left; margin-top: 15px;">
                         <span class="bio-tag"><i class="fa-solid fa-graduation-cap"></i> MSc. Cyber Security</span>
-                        <span class="bio-tag"><i class="fa-solid fa-briefcase"></i> 10+ Yrs Public Advisory</span>
-                        <span class="bio-tag"><i class="fa-solid fa-award"></i> Security Innovator</span>
+                        <span class="bio-tag"><i class="fa-solid fa-briefcase"></i> Public Advisory</span>
+                        <span class="bio-tag"><i class="fa-solid fa-award"></i> Security Leader</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="hero-visual" style="width: 100%;">
-            <div class="action-panel">
-                <h3 style="color: #fff; margin-top: 0; font-size: 1.4rem;">Constituency Security Portal</h3>
-                <p style="color: #94a3b8; font-size: 0.9rem;">Deploy rapid distress infrastructure instantly. Activating logs your GPS coordinate, rings the community siren alert, and relays SMS logs directly to designated response networks.</p>
+        <div class="right-column">
+            <div class="sos-panel">
+                <div id="timer" style="font-size: 1.8rem; font-weight: bold; color: var(--sos-red);"></div>
+                <div id="statusMsg" style="font-weight: bold; margin-bottom: 10px; color: #94a3b8; font-size: 0.9rem;">SYSTEM ARMED: READY</div>
                 
-                <a href="campus_sos.html" class="btn btn-sos">
-                    <i class="fa-solid fa-bell"></i> ACTIVATE SOS SIGNAL
-                </a>
+                <div id="sos-btn" class="sos-circle-trigger">
+                    <img src="Button.png" style="width: 100%; border-radius: 50%; pointer-events: none;">
+                </div>
                 
-                <a href="dashboard.html" class="btn btn-command">
-                    <i class="fa-solid fa-chart-line"></i> HQ COMMAND OPERATIONS
-                </a>
-                
-                <p style="font-size: 0.75rem; color: #64748b; margin-top: 15px;">
-                    An interactive demonstration of the [Candidate] Tactical Protection System.
-                </p>
+                <button id="stop-btn" style="background: #334155; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: bold; width: 100%; max-width: 250px;">
+                    CANCEL DISTRESS PROTOCOL
+                </button>
+
+                <div style="margin-top: 25px; border-top: 1px solid #334155; padding-top: 15px;">
+                    <div class="input-group-title">Student Verification</div>
+                    <input type="text" id="bloodGroup" placeholder="Student ID / Matric Number" class="input-field">
+                    <input type="text" id="allergies" placeholder="Hostel Block / Off-Campus Area" class="input-field">
+                    <p class="sub-text">Identity profile dynamically appends to coordinates during emergency transmissions.</p>
+                </div>
+
+                <div style="margin-top: 20px; border-top: 1px solid #334155; padding-top: 15px;">
+                    <div class="input-group-title">Emergency Response Matrix</div>
+                    <input type="text" id="contact1" placeholder="Primary Response Hotline" value="+234XXXXXXXXXX" class="input-field">
+                    <input type="text" id="contact2" placeholder="Secondary Response Hotline" class="input-field">
+                    <p class="sub-text">Encrypted execution: Destination parameters are preserved strictly inside your sandboxed web client.</p>
+                </div>
+
+                <div id="vgn-settings" style="margin-top: 25px; background: #0f172a; padding: 15px; border-radius: 8px; border: 1px solid #334155; box-sizing: border-box;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <label for="stealthToggle" style="color: #cbd5e1; font-size: 0.9rem; font-weight: 500; cursor: pointer;">Tactical Stealth Mode (Silent SOS)</label>
+                        <input type="checkbox" id="stealthToggle" style="width: 22px; height: 22px; cursor: pointer;">
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; border-top: 1px solid #334155; padding-top: 20px; text-align: left;">
+                    <h4 style="margin: 0 0 5px; color: #fff; font-size: 1rem;">Campaign Intelligence Feedback</h4>
+                    <p style="font-size: 0.8rem; color: #94a3b8; margin: 0 0 15px;">Report regional tactical anomalies directly to the infrastructure dev squad.</p>
+                    
+                    <form action="https://api.staticforms.xyz/submit" method="post">
+                        <input type="hidden" name="accessKey" value="sf_994c7c62301ad637286a6c00"> 
+                        <input type="hidden" name="subject" value="APC Campus Sentinel Feedback Matrix">
+
+                        <input type="text" name="name" placeholder="Reporter Identifier (Name/Dept)" required class="input-field">
+                        <textarea name="message" placeholder="Log status anomalies or operational requests here..." required class="input-field" style="height: 70px; resize: none;"></textarea>
+                        
+                        <button type="submit" style="width: 100%; background: var(--apc-blue); color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.9rem; margin-top: 5px;">
+                            SUBMIT INTEGRITY STATUS
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+
+    <footer style="margin-top: 40px; padding: 20px 0; text-align: center; font-size: 0.75rem; color: #64748b; line-height: 1.5; border-top: 1px solid #334155;">
+        <p><strong>APC Progressive Infrastructure Commitment</strong></p>
+        <p>Telemetry structures, cached maps, and device signatures remain localized within storage sectors. No centralized processing executes unless active SOS validation thresholds are intentionally breached.</p>
+        <p>© 2026 Vigilan-NG Architecture Suite. All Rights Reserved.</p>
+        <p style="text-decoration: underline; cursor: pointer; color: var(--apc-blue);" onclick="alert('Data Encryption Layer: Sandboxed LocalStorage parameters active. Tracking standard: GPS core only. Third-party disclosure: Disabled.')">View Data Protocols</p>
+    </footer>
 </div>
+
+<audio id="sirenAudio" src="siren.mp3" preload="auto" loop></audio>
+<script src="app.js"></script>
 
 </body>
 </html>
