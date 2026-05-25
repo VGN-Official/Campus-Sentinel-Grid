@@ -1,151 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vigilant-Stay | Emergency Support Locator</title>
-
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#1a237e">
-    <link rel="icon" type="image/png" href="icon.png">
-    <link rel="apple-touch-icon" href="icon.png">
-    <link rel="manifest" href="manifest.json">
-    
-    
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('Service Worker Registered!'))
-                    .catch(err => console.log('SW Registration Failed:', err));
-            });
-        }
-    </script>
-    
-    
+    <title>VigilanNG | Campaign Security Initiative</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        .sos-button {
-            width: 200px;
-            height: 200px;
-            background-color: #00ADEF; 
-            color: white;
-            border-radius: 50%;
-            border: 8px solid #ffcdd2;
-            font-size: 24px;
-            font-weight: bold;
-            box-shadow: 0 0 20px rgba(0,0,0,0.3);
-            cursor: pointer;
-            display: block;
-            margin: 50px auto;
-        }
-
-        .sos-button:active {
-            background-color: #b71c1c;
-            transform: scale(0.95);
-        }
-        /* While holding down */
-        .sos-button.active {
-            background-color: orange;
-            transform: scale(0.95);
-        }
-
-        /* After the alert is sent */
-        .sos-button.sent {
-            background-color: green;
+        :root {
+            --primary-dark: #0f172a;   /* Deep Executive Navy */
+            --accent-red: #dc2626;     /* SOS Emergency Red */
+            --campaign-gold: #eab308;  /* Leadership Gold */
+            --card-bg: #1e293b;
         }
         
-         .sos-circle-trigger {
-            width: 250px;           /* Maintain the prominent size */
-            height: 250px;          
-            border-radius: 50%;     /* This is the key "Reshape" command */
-            overflow: hidden;       /* Keeps the image inside the circle */
-            background: transparent;
-            cursor: pointer;
-            filter: drop-shadow(0px 10px 15px rgba(255, 0, 0, 0.4)); /* Match the red glow */
-            transition: transform 0.1s; /* Add a slight "Press" effect */
+        body { 
+            margin: 0; 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            background: var(--primary-dark); 
+            color: #f1f5f9;
         }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Navigation */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #334155;
+        }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--accent-red); letter-spacing: 1px; }
+
+        /* Main Hero Section Split */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            md-flex-direction: row;
+            gap: 40px;
+            margin-top: 40px;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .hero { flex-direction: row; }
+            .hero-text { flex: 1; }
+            .hero-visual { flex: 1; text-align: center; }
+        }
+
+        /* Profile & Insignia Column */
+        .candidate-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            border-top: 5px solid var(--campaign-gold);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .avatar-placeholder {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: #475569;
+            margin: 0 auto 20px;
+            border: 4px solid var(--campaign-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .avatar-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+
+        .credentials h2 { margin: 5px 0; color: #fff; font-size: 1.8rem; }
+        .credentials .title { color: var(--campaign-gold); font-weight: 600; font-size: 1rem; margin-bottom: 15px; text-transform: uppercase; }
+        .bio-tag { background: #334155; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; margin: 3px; display: inline-block; }
+
+        /* Action Launch Panel */
+        .action-panel {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 320px;
+            padding: 16px;
+            margin: 10px auto;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-sos { background: var(--accent-red); color: white; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4); }
+        .btn-sos:hover { background: #b91c1c; transform: translateY(-2px); }
+        
+        .btn-command { background: #475569; color: white; }
+        .btn-command:hover { background: #334155; }
     </style>
-    </head>
+</head>
 <body>
-    <header style="text-align: center; padding: 20px;">
-        <p><img src="icon.png" style="display: block; margin: 0 auto; width: 80px;"></p> 
-        <h1 style="color: #00ADEF;">Vigilant-Stay</h1>
-        <p>Emergency Support Locator</p>
+
+<div class="container">
+    <header>
+        <div class="logo"><i class="fa-solid fa-shield-halved"></i> Campus Sentinel Grid</div>
+        <div style="font-size: 0.9rem; color: #94a3b8;"><i class="fa-solid fa-circle" style="color: #22c55e;"></i> SECURE PROTOCOL ACTIVE</div>
     </header>
 
-    <main style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh;">
-        <div id="timer" style="font-size: 2rem; font-weight: bold; margin-bottom: 10px;"></div>
-        <div id="statusMsg" style="font-weight: bold; margin-bottom: 20px;">Ready</div>
-        
-          <p>
-        <div id="sos-btn" class="sos-circle-trigger" style="cursor: pointer; -webkit-tap-highlight-color: transparent;">
-            <img src="Button.png" style="width: 250px; border-radius: 50%; pointer-events: none;">
-        </div>
-        </p>
-        <button id="stop-btn" style="background: #444; color: #fff; border: none; padding: 10px; border-radius: 8px; margin-top: 20px;">
-            STOP & RESET
-        </button>
-
-        <div class="checkin-panel" style="margin-top: 20px; text-align: center; background: #e3f2fd; padding: 15px; border-radius: 10px; border: 1px solid #1565C0;">
-            <h3 style="font-size: 1rem; color: #00ADEF;">CUSTOMER CHECK-IN</h3>
-    
-            <input type="text" id="bloodGroup" placeholder="Customer ID (e.g Keycard Number)." 
-            style="display: block; margin: 5px auto; padding: 10px; width: 80%; border-radius: 5px; border: 1px solid #90caf9;">
-    
-            <input type="text" id="allergies" placeholder="Room Number (e.g 406)." 
-            style="display: block; margin: 5px auto; padding: 10px; width: 80%; border-radius: 5px; border: 1px solid #90caf9;">
-           
-            <p style="font-size: 0.7rem; color: #1565C0;">Data is used to identify you in a distress signal.</p>
-        </div>
-
-        <div class="settings-panel" style="margin-top: 40px; text-align: center; background: #f5f5f5; padding: 15px; border-radius: 10px; border: 1px solid #ddd;">
-            <h3 style="font-size: 1rem; color: #333;">Emergency Contacts</h3>
-            <input type="text" id="contact1" placeholder="Contact 1 (e.g. +234...)" value="+234XXXXXXXXXX" style="display: block; margin: 5px auto; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-            <input type="text" id="contact2" placeholder="Contact 2" style="display: block; margin: 5px auto; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-            <p style="font-size: 0.7rem; color: #666;">Numbers are saved locally for privacy.</p>
+    <div class="hero">
+        <div class="hero-text">
+            <div class="candidate-card">
+                <div class="avatar-placeholder">
+                    <i class="fa-solid fa-user-tie" style="font-size: 5rem; color: #cbd5e1;"></i>
+                </div>
+                <div class="credentials" style="text-align: center;">
+                    <h2>HON. ALIYU BELLO</h2>
+                    <div class="title">For Executive Chairman / Stakeholder</div>
+                    <hr style="border-color: #334155; margin: 15px 0;">
+                    
+                    <p style="text-align: left; font-size: 0.95rem; line-height: 1.5; color: #cbd5e1;">
+                        Delivering a proactive, digitally protected constituency. This infrastructure directly connects local communities, campuses, and response squads to clear tactical assets during vulnerabilities.
+                    </p>
+                    
+                    <div style="text-align: left; margin-top: 15px;">
+                        <span class="bio-tag"><i class="fa-solid fa-graduation-cap"></i> MSc. Cyber Security</span>
+                        <span class="bio-tag"><i class="fa-solid fa-briefcase"></i> 10+ Yrs Public Advisory</span>
+                        <span class="bio-tag"><i class="fa-solid fa-award"></i> Security Innovator</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div id="vgn-settings" style="background: #1a1a1a; padding: 20px; border-radius: 15px; margin-top: 30px; border: 1px solid #333; text-align: left;">
-            
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #222;">
-        <label for="stealthToggle" style="color: #eee;">Stealth Mode (Quiet)</label>
-        <input type="checkbox" id="stealthToggle" style="width: 25px; height: 25px; cursor: pointer;">
+        <div class="hero-visual" style="width: 100%;">
+            <div class="action-panel">
+                <h3 style="color: #fff; margin-top: 0; font-size: 1.4rem;">Constituency Security Portal</h3>
+                <p style="color: #94a3b8; font-size: 0.9rem;">Deploy rapid distress infrastructure instantly. Activating logs your GPS coordinate, rings the community siren alert, and relays SMS logs directly to designated response networks.</p>
+                
+                <a href="campus_sos.html" class="btn btn-sos">
+                    <i class="fa-solid fa-bell"></i> ACTIVATE SOS SIGNAL
+                </a>
+                
+                <a href="dashboard.html" class="btn btn-command">
+                    <i class="fa-solid fa-chart-line"></i> HQ COMMAND OPERATIONS
+                </a>
+                
+                <p style="font-size: 0.75rem; color: #64748b; margin-top: 15px;">
+                    An interactive demonstration of the [Candidate] Tactical Protection System.
+                </p>
+            </div>
         </div>
-
-    </main>
-
-    <audio id="sirenAudio" src="siren.mp3" preload="auto" loop></audio>
-
-    <script src="app.js"></script>
-
-    <div class="feedback-panel" style="margin-top: 30px; padding: 20px; background: white; border-radius: 12px; border: 1px solid #ddd; text-align: center;">
-    <h3 style="font-size: 1.1rem; color: #333; margin-bottom: 10px;">VGN Support & Feedback</h3>
-    <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">Report a bug or suggest a feature to our dev team.</p>
-    
-    <form action="https://api.staticforms.xyz/submit" method="post">
-        <input type="hidden" name="accessKey" value="sf_994c7c62301ad637286a6c00"> 
-        <input type="hidden" name="subject" value="VGN App Feedback">
-
-        <input type="text" name="name" placeholder="Your Name Or Email" required 
-               style="width: 90%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
-        
-        <textarea name="message" placeholder="Describe the issue or suggestion..." required 
-                  style="width: 90%; height: 80px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;"></textarea>
-        
-        <button type="submit" style="width: 95%; background: #333; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">
-            📤 SEND TO VGN DEV
-        </button>
-    </form>
+    </div>
 </div>
-
-   <footer style="margin-top: 50px; padding: 20px; text-align: center; font-size: 0.75rem; color: #777; line-height: 1.4;">
-        <p><strong>Vigilant-Stay Privacy Commitment</strong></p>
-        <p>Location data are stored <strong>locally</strong> on this device. VGN does not upload your health records to a central database unless an SOS is triggered.</p>
-        <p>© 2026 VGN Security Suite. All Rights Reserved.</p>
-        <p style="text-decoration: underline; cursor: pointer;" onclick="alert('Data Privacy: LocalStorage encryption active. Location: GPS-only. No 3rd party sharing.')">View Data Protocols</p>
-    </footer>
 
 </body>
 </html>

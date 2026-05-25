@@ -1,4 +1,4 @@
-const CACHE_NAME = 'Vigilant-Stay-v1';
+const CACHE_NAME = 'APC Campus-Sentinel-v1';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

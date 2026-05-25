@@ -1,6 +1,6 @@
 {
-  "name": "Vigilant-Stay:Emergency Support Locator",
-  "short_name": "Vigilant-Stay",
+  "name": "APC Campus Sentinel:Emergency Support Locator",
+  "short_name": "APC Campus Sentinel",
   "description": "Professional emergency broadcast system for estate and personal security.",
   "start_url": "index.html",
   "display": "standalone",

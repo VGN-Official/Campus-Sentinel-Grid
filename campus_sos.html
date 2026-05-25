@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APC Campus Sentinel | Emergency System</title>
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0b5394">
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="manifest.json">
+    
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker Registered!'))
+                    .catch(err => console.log('SW Registration Failed:', err));
+            });
+        }
+    </script>
+    
+    <style>
+        :root {
+            --apc-blue: #0b5394;
+            --apc-green: #38761d;
+            --sos-red: #cc0000;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+        }
+
+        .sos-button {
+            width: 200px;
+            height: 200px;
+            background-color: var(--sos-red); 
+            color: white;
+            border-radius: 50%;
+            border: 8px solid #fecaca;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            cursor: pointer;
+            display: block;
+            margin: 50px auto;
+        }
+
+        .sos-button:active {
+            background-color: #991b1b;
+            transform: scale(0.95);
+        }
+
+        .sos-button.active {
+            background-color: #ea580c;
+            transform: scale(0.95);
+        }
+
+        .sos-button.sent {
+            background-color: var(--apc-green);
+        }
+        
+        .sos-circle-trigger {
+            width: 250px;           
+            height: 250px;          
+            border-radius: 50%;     
+            overflow: hidden;       
+            background: transparent;
+            cursor: pointer;
+            filter: drop-shadow(0px 10px 15px rgba(204, 0, 0, 0.4)); 
+            transition: transform 0.1s; 
+        }
+    </style>
+</head>
+<body>
+    <div style="padding: 15px 20px 0;">
+        <a href="index.html" style="color: var(--apc-blue); text-decoration: none; font-weight: bold; font-size: 0.9rem;">
+            <i class="fa-solid fa-arrow-left"></i> Exit to Campaign Portal
+        </a>
+    </div>
+
+    <header style="text-align: center; padding: 10px 20px 20px;">
+        <p><img src="icon.png" style="display: block; margin: 0 auto; width: 80px;"></p> 
+        <h1 style="color: var(--apc-blue); margin: 5px 0;">APC Campus Sentinel</h1>
+        <p style="margin: 5px 0; color: #64748b; font-size: 0.95rem;">Renewed Hope Rapid Security Infrastructure</p>
+    </header>
+
+    <main style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 50vh;">
+        <div id="timer" style="font-size: 2rem; font-weight: bold; margin-bottom: 10px;"></div>
+        <div id="statusMsg" style="font-weight: bold; margin-bottom: 20px; color: var(--apc-blue);">System Arming: Ready</div>
+        
+        <div id="sos-btn" class="sos-circle-trigger" style="cursor: pointer; -webkit-tap-highlight-color: transparent;">
+            <img src="Button.png" style="width: 250px; border-radius: 50%; pointer-events: none;">
+        </div>
+        
+        <button id="stop-btn" style="background: #475569; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; margin-top: 20px; font-weight: bold; cursor: pointer;">
+            CANCEL DISTRESS PROTOCOL
+        </button>
+
+        <div class="checkin-panel" style="margin-top: 25px; text-align: center; background: #eff6ff; padding: 20px; border-radius: 12px; border: 1px solid #bfdbfe; width: 85%; max-width: 350px;">
+            <h3 style="font-size: 1.1rem; color: var(--apc-blue); margin-top: 0;">STUDENT MANIFEST VERIFICATION</h3>
+    
+            <input type="text" id="bloodGroup" placeholder="Student ID / Matric Number" 
+            style="display: block; margin: 8px auto; padding: 12px; width: 90%; border-radius: 6px; border: 1px solid #93c5fd; font-size: 0.9rem;">
+    
+            <input type="text" id="allergies" placeholder="Hostel Block / Off-Campus Area" 
+            style="display: block; margin: 8px auto; padding: 12px; width: 90%; border-radius: 6px; border: 1px solid #93c5fd; font-size: 0.9rem;">
+           
+            <p style="font-size: 0.75rem; color: var(--apc-blue); margin-bottom: 0; line-height: 1.4;">
+                This identity profile is automatically bound to your live tactical GPS distress coordinates during transmission.
+            </p>
+        </div>
+
+        <div class="settings-panel" style="margin-top: 30px; text-align: center; background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0; width: 85%; max-width: 350px;">
+            <h3 style="font-size: 1rem; color: #334155; margin-top: 0;">Emergency Response Matrix</h3>
+            <input type="text" id="contact1" placeholder="Campus Security Hotline" value="+234XXXXXXXXXX" style="display: block; margin: 5px auto; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; width: 90%;">
+            <input type="text" id="contact2" placeholder="SRG Squad Contact" style="display: block; margin: 5px auto; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; width: 90%;">
+            <p style="font-size: 0.72rem; color: #64748b; margin-bottom: 0;">Encryption active: Contacts are compiled strictly within local sandboxed cache files.</p>
+        </div>
+
+        <div id="vgn-settings" style="width: 85%; max-width: 350px; background: #1e293b; padding: 15px; border-radius: 12px; margin-top: 20px; text-align: left; box-sizing: border-box;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label for="stealthToggle" style="color: #f1f5f9; font-size: 0.95rem; font-weight: 500;">Tactical Tactical Mode (Silent SOS)</label>
+                <input type="checkbox" id="stealthToggle" style="width: 22px; height: 22px; cursor: pointer;">
+            </div>
+        </div>
+    </main>
+
+    <audio id="sirenAudio" src="siren.mp3" preload="auto" loop></audio>
+
+    <script src="app.js"></script>
+
+    <div class="feedback-panel" style="margin: 30px auto; padding: 20px; background: white; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; width: 85%; max-width: 350px;">
+        <h3 style="font-size: 1.1rem; color: #1e293b; margin-top: 0;">Campaign Situation Feedback</h3>
+        <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 15px;">Report sector anomalies or submission bugs straight to the advisory desk.</p>
+        
+        <form action="https://api.staticforms.xyz/submit" method="post">
+            <input type="hidden" name="accessKey" value="sf_994c7c62301ad637286a6c00"> 
+            <input type="hidden" name="subject" value="APC Campus Sentinel Feedback">
+
+            <input type="text" name="name" placeholder="Name or Department" required 
+                   style="width: 90%; padding: 10px; margin-bottom: 10px; border: 1px solid #cbd5e1; border-radius: 6px;">
+            
+            <textarea name="message" placeholder="Type report here..." required 
+                      style="width: 90%; height: 80px; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; margin-bottom: 10px;"></textarea>
+            
+            <button type="submit" style="width: 95%; background: var(--apc-blue); color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
+                SUBMIT RADAR STATUS
+            </button>
+        </form>
+    </div>
+
+    <footer style="margin-top: 40px; padding: 20px; text-align: center; font-size: 0.75rem; color: #64748b; line-height: 1.5; background: #f1f5f9;">
+        <p><strong>APC Progressive Infrastructure Commitment</strong></p>
+        <p>All geolocation datasets and telemetry paths compile <strong>locally</strong> to assure student safety. Telemetry signals transmit to centralized response servers only at the precise moment of tactical distress verification.</p>
+        <p>© 2026 Vigilan-NG Network Core Suite.</p>
+    </footer>
+</body>
+</html>
