@@ -74,24 +74,26 @@
         border-top: 5px solid var(--apc-green);
         box-shadow: 0 15px 35px rgba(0,0,0,0.5);
     }
-        .avatar-frame {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            background: #475569;
-            margin: 0 auto 15px;
-            border: 4px solid var(--apc-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+       .avatar-frame {
+        width: 250px;          /* Expanded from 130px */
+        height: 250px;         /* Expanded from 130px */
+        border-radius: 50%;    /* Keeps it perfectly circular */
+        background: #1e293b;
+        margin: 0 auto 15px;
+        border: 4px solid #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        box-shadow: 0 0 15px rgba(220, 38, 38, 0.4), 0 0 25px rgba(34, 197, 94, 0.2);
+
         }
-        .avatar-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-frame img { width: 250px; height: 250px; object-fit: cover; }
         .bio-tag { background: #334155; padding: 6px 12px; border-radius: 20px; font-size: 0.78rem; margin: 4px; display: inline-block; color: #cbd5e1; }
 
        .sos-panel {
-        background: rgba(13, 30, 54, 0.75);
-        border: 1px solid #1e3a61;
+        background: #063683;
+        border: 2px solid #1e3a5f; /* Deep blue border line */
         border-radius: 16px;
         padding: 25px;
         text-align: center;
@@ -150,7 +152,7 @@
                 <span style="font-size: 0.7rem; color: #22c55e;"><i class="fa-solid fa-circle" style="font-size: 0.55rem;"></i> SECURE GRID ACTIVE</span>
             </div>
             <div style="width: 40px; height: 40px; border-radius: 6px; background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 2px solid var(--apc-blue); padding: 2px; box-sizing: border-box;">
-                <img src="apc_logo.png" alt="APC Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                <img src="pdp_logo.png" alt="APC Logo" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
         </div>
     </header>
@@ -159,12 +161,12 @@
         <div class="left-column">
             <div class="candidate-card">
                 <div class="avatar-frame">
-                    <i class="fa-solid fa-user-tie" style="font-size: 4rem; color: #cbd5e1;"></i>
+                    <img src="candidate_logo.png" style="font-size: 4rem; color: #cbd5e1;"></i>
                 </div>
                 <div style="text-align: center;">
-                    <h2 style="margin: 5px 0; font-size: 1.6rem; color: #fff;">HON. ALIYU BELLO</h2>
-                    <div style="color: var(--apc-green); font-weight: bold; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">For Executive Chairman / Stakeholder</div>
-                    <hr style="border-color: #334155; margin: 15px 0;">
+                    <h2 style="margin: 5px 0; font-size: 1.6rem; color: #fff;">MAL.USMAN ADAMU(Suphi)</h2>
+                    <div style="color: var(--apc-green); font-weight: bold; font-size: 1.6rem; color: #ec97a1cc; text-transform: uppercase; letter-spacing: 1px;">For Governor Bauchi State</div>
+                    <hr style="border-color: #553333; margin: 15px 0;">
                     
                     <p style="text-align: left; font-size: 0.9rem; line-height: 1.6; color: #cbd5e1;">
                         "True progress is impossible without absolute security. As part of our commitment to safeguarding our future leaders, we deploy the Campus Sentinel Grid—a rapid-response SOS safety layer for our institutions."
@@ -234,7 +236,7 @@
     </div>
 
     <footer style="margin-top: 40px; padding: 20px 0; text-align: center; font-size: 0.75rem; color: #64748b; line-height: 1.5; border-top: 1px solid #334155;">
-        <p><strong>APC Progressive Infrastructure Commitment</strong></p>
+        <p><strong>PDP Power to the People</strong></p>
         <p>Telemetry structures, cached maps, and device signatures remain localized within storage sectors. No centralized processing executes unless active SOS validation thresholds are intentionally breached.</p>
         <p>© 2026 Vigilan-NG Architecture Suite. All Rights Reserved.</p>
         <p style="text-decoration: underline; cursor: pointer; color: var(--apc-blue);" onclick="alert('Data Encryption Layer: Sandboxed LocalStorage parameters active. Tracking standard: GPS core only. Third-party disclosure: Disabled.')">View Data Protocols</p>
